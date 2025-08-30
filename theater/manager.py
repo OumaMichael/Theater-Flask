@@ -124,11 +124,11 @@ def manager_reservations_auxiliar():
     projections = model.Projection.query.filter(model.Projection.day <= future, model.Projection.day >= past).order_by(model.Projection.day.asc(), model.Projection.time.asc()).all()
     num_results = []
     for proj in projections:
-        num_results.append(proj.screen.num_total_seats - compute_reserved_seats(proj.id))
+        num_results.append(compute_free_seats(proj.id))
     return projections, num_results
 
 
-def compute_reserved_seats(id):
+def compute_free_seats(id):
     projection = model.Projection.query.filter(model.Projection.id == id).one()
     sum_result = db.session.query(
         db.func.sum(model.Reservation.num_seats).label('reserved')
@@ -161,7 +161,7 @@ def process_ajax():
 
         results = {}
         for proj in projections:
-            seats = compute_reserved_seats(proj.id)
+            seats = compute_free_seats(proj.id)
             # results[proj.id] = {'left':seats,'available': proj.screen.num_total_seats - seats}
             results[proj.id] = seats
         result = results
