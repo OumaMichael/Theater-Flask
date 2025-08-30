@@ -28,7 +28,7 @@ def manager_reservations_auxiliar():
     projections = model.Projection.query.filter(model.Projection.day <= future, model.Projection.day >= past).order_by(model.Projection.day.asc(), model.Projection.time.asc()).all()
     num_results = []
     for proj in projections:
-        num_results.append(proj.screen.num_total_seats - compute_reserved_seats(proj.id))
+        num_results.append(compute_free_seats(proj.id))
     return projections, num_results
 
 
