@@ -101,3 +101,55 @@ This project is developed as part of the Evaluation of the Web Applications Cour
   * HTML
   * CSS
   * JavaScipt + JQuery + AJAX
+
+## Running the Application
+
+### Setup Virtual Environment and Install Dependencies
+
+For Windows:
+
+```bash
+py -3 -m venv virtual
+virtual\Scripts\activate
+pip install -U pip
+pip install Flask python-dateutil
+pip install flask-sqlalchemy mysqlclient
+pip install flask-bcrypt
+pip install flask-login
+```
+
+For Linux:
+
+```bash
+python3 -m venv virtual
+. virtual/bin/activate
+pip install -U pip
+pip install Flask python-dateutil
+pip install flask-sqlalchemy mysqlclient
+pip install flask-bcrypt
+pip install flask-login
+```
+
+### Running the Flask App
+
+For Windows:
+
+```bash
+virtual\Scripts\activate
+pip install Flask python-dateutil flask-sqlalchemy mysqlclient flask-bcrypt flask-login
+$env:FLASK_APP="theater"
+$env:FLASK_ENV="development"
+python -m flask run
+```
+
+### Stopping the Flask App
+
+To stop the Flask app running on port 5000:
+
+```bash
+netstat -ano | findstr :5000
+taskkill /PID <pid> /F
+```
+
+Replace `<pid>` with the process ID found from the netstat command.
+
