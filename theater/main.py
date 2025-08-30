@@ -63,7 +63,11 @@ def reservation(id):
     current_time = datetime.now()
     all_projections = model.Projection.query.filter(model.Projection.day >= current_day).order_by(model.Projection.day.asc(), model.Projection.time.asc()).all()
     if id == None:
-        return render_template("reservation.html", projection=None, projections=all_projections)
+        # Pass a dummy movie title to avoid template error
+        dummy_projection = type('Dummy', (), {})()
+        dummy_projection.movie = type('DummyMovie', (), {})()
+        dummy_projection.movie.title = ""
+        return render_template("reservation.html", projection=dummy_projection, projections=all_projections)
     else:
         projection = model.Projection.query.get(id)
         projections = model.Projection.query.filter(model.Projection.movie_id == projection.movie_id, model.Projection.day >= current_day).order_by(model.Projection.day.asc(), model.Projection.time.asc()).all()
@@ -74,12 +78,18 @@ def reservation(id):
 @flask_login.login_required
 def reservation_post():
     choosen_projection = request.form.get("projection")  # {{proj.id}}
-    choosen_num_seats = request.form.get("seats")  # "1"
-
+    choosen_num_seats = int(request.form.get("seats"))  # "1"
 
     projection = model.Projection.query.get(choosen_projection)
 
-    new_reservation = model.Reservation(user_id=current_user.id, projection_id=projection.id, num_seats=int(choosen_num_seats), date_time=datetime.now())
+    # Check available seats
+    from theater.manager import compute_free_seats
+    available_seats = compute_free_seats(projection.id)
+    if choosen_num_seats > available_seats:
+        flash(f"Not enough available seats. Only {available_seats} left.", 'error')
+        return redirect(url_for("main.reservation", id=projection.id))
+
+    new_reservation = model.Reservation(user_id=current_user.id, projection_id=projection.id, num_seats=choosen_num_seats, date_time=datetime.now())
     
     db.session.add(new_reservation)
     db.session.commit()
