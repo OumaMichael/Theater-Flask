@@ -57,16 +57,12 @@ def login():
 def login_post():
     email = request.form.get("email")
     password = request.form.get("password")
-    # Check that passwords are equal
-    if password != request.form.get("password_repeat"):
-        flash("Passwords are different. Try again.", 'error')
-        return redirect(url_for("auth.login"))
     # Get the user with that email from the database:
     user = model.User.query.filter_by(email=email).first()
     if user and bcrypt.check_password_hash(user.password, password):
         # The user exists and the password is correct
         flask_login.login_user(user)
-        flash("You have successfully loged!", 'success')
+        flash("You have successfully logged in!", 'success')
         return redirect(url_for("main.index"))
     else:
         # Wrong email and/or password
