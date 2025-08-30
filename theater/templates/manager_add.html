@@ -2,8 +2,7 @@
 
 {% block content %}
 
-
-{% if projection != None %}
+{% if movies and screens %}
 <section class='form'>
     <h2>&nbsp;&nbsp;ADD A NEW PROJECTION&nbsp;&nbsp;</h2>
     <form action="{{ url_for('manager.add_post') }}" method="post">
@@ -39,7 +38,8 @@
     </form>
 
 </section>
+{% else %}
+    <p style="text-align: center">No movies or screens available to add projections.</p>
 {% endif %}
-
 
 {% endblock %}
