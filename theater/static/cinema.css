@@ -5,11 +5,10 @@ body {
     background-size: cover;
     background-attachment: fixed;
     position:relative;
-    min-height: 100vh;  /* footer always botton*/
+    min-height: 100vh;  /* footer always bottom */
     padding-bottom: 5rem; 
     margin: 0;
     font-family: Arial;
-
 }
 
 * {
@@ -22,7 +21,6 @@ body {
   padding-block: 1em;
   border-radius: 0 0 85% 85% / 30%;
   text-align: center;
-  
 }
 .header h1{
   font-size: 25px;
@@ -30,7 +28,6 @@ body {
 }
 .header a {
   color: black;
-  /* text-align: center; */
   padding: 12px;
   text-decoration: none; /* without link line*/
   font-size: 18px; 
@@ -44,12 +41,31 @@ body {
 }
 
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: 5rem;
     background: rgb(8, 4, 21);
- }
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 20px;
+  }
+  .header a {
+    font-size: 16px;
+    padding: 8px;
+  }
+  .form {
+    width: 90%;
+  }
+  .horizontal-movies img {
+    width: 120px;
+  }
+  table {
+    font-size: 12px;
+  }
+}
 
 h2 {
   text-align: center;
@@ -241,5 +257,25 @@ td {
   border: 2px solid rgb(39, 110, 190);
   border-radius: 17px;
   /* background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); */
+}
+
+.loading-seats {
+  color: #666;
+  font-style: italic;
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .header a {
+    display: block;
+    margin: 5px 0;
+  }
+  .horizontal-movies {
+    grid-auto-flow: row;
+    gap: 0.5rem;
+  }
+  .horizontal-movies img {
+    width: 100px;
+  }
 }
 
