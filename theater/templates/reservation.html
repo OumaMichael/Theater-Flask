@@ -46,7 +46,15 @@
     {% if projections | length > 0 %}
         {% include 'projections_table.html' %}
     {% else%}
-        <p style="text-align: center">THERE ARE NO {{projection.movie.title | upper}} PROJECTIONS SOON</p>
+        <p style="text-align: center">
+            THERE ARE NO 
+            {% if projection and projection.movie %}
+                {{ projection.movie.title | upper }}
+            {% else %}
+                PROJECTIONS
+            {% endif %}
+            SOON
+        </p>
     {% endif %}
 </section>
 
