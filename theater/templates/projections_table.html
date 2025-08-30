@@ -17,10 +17,10 @@
         {% set proj = "proj"  ~ projection.id  %}
 
         <tr id="{{proj}}">
-            <td><a href="{{ url_for('main.movie', id=projection.movie.id) }}"><img src={{projection.movie.img}} width=120 style="border-radius: 15px;"></a></td>
+            <td><a href="{{ url_for('main.movie', id=projection.movie.id) }}"><img src={{projection.movie.img}} width=120 style="border-radius: 15px;" alt="{{ projection.movie.title }} poster"></a></td>
             <td>{{ projection.movie.title }}</td>
             <td>{{ projection.screen.name }}</td>
-            <td class="seats"></td>
+            <td class="seats"><span class="loading-seats">Loading...</span></td>
             <td>{{ projection.day.strftime('%d-%m-%Y') }}</td>
             <td>{{ projection.time.strftime('%H:%M') }}</td>
             <td class="sold"><a class="buttom" href="{{ url_for('main.reservation', id=projection.id) }}">Buy Ticket</a></td>    
