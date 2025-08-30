@@ -2,7 +2,8 @@
 
 {% block content %}
 
-{% if current_data and movies and screens %}
+
+{% if projection != None %}
     <section class='form'>
         <h2>&nbsp;&nbsp;EDIT PROJECTION&nbsp;&nbsp;</h2>
         <form action="{{ url_for('manager.edit_post', id=current_data.id) }}" method="post">
@@ -44,8 +45,7 @@
         </form>
 
     </section>
-{% else %}
-    <p style="text-align: center">No data available to edit projection.</p>
 {% endif %}
+
 
 {% endblock %}
